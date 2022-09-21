@@ -1,4 +1,4 @@
-package ghkey
+package ghkeys
 
 import (
 	"testing"

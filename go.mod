@@ -1,4 +1,4 @@
-module github.com/rtgnx/ghkey
+module github.com/rtgnx/ghkeys
 
 go 1.19
 

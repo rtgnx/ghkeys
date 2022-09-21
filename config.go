@@ -1,4 +1,4 @@
-package ghkey
+package ghkeys
 
 type Config struct {
 	AllowedUsers   []string

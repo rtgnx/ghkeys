@@ -7,12 +7,11 @@ import (
 	"strings"
 
 	cli "github.com/jawher/mow.cli"
-
-	"github.com/rtgnx/ghkey"
+	"github.com/rtgnx/ghkeys"
 )
 
 func main() {
-	app := cli.App("ghkey", "github keys")
+	app := cli.App("ghkeys", "github keys")
 
 	var (
 		allowedUsers   = app.StringsOpt("users", []string{}, "list of allowed users")
@@ -21,7 +20,7 @@ func main() {
 	)
 
 	app.Action = func() {
-		keys, err := ghkey.Keys(*userName, ghkey.Config{AllowedSources: *allowedSources, AllowedUsers: *allowedUsers})
+		keys, err := ghkeys.Keys(*userName, ghkeys.Config{AllowedSources: *allowedSources, AllowedUsers: *allowedUsers})
 		if err != nil {
 			log.Fatalln(err)
 		}
