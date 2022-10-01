@@ -3,6 +3,7 @@ package ghkeys
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os/user"
 	"regexp"
@@ -10,7 +11,7 @@ import (
 	"strings"
 )
 
-const NameRegex = `^[a-zA-Z]+$`
+const NameRegex = `^[a-zA-Z0-9-]+$`
 
 type KeySource func(string) ([]string, error)
 
@@ -76,4 +77,19 @@ func Github(username string) ([]string, error) {
 	}
 
 	return strings.Split(string(b), "\n"), nil
+}
+
+func Local(pattern string) KeySource {
+	return func(s string) ([]string, error) {
+		// Remove path traversal attempts
+		s = strings.ReplaceAll(s, "/", "")
+
+		b, err := ioutil.ReadFile(fmt.Sprintf(pattern, s))
+
+		if err != nil {
+			return []string{}, err
+		}
+
+		return strings.Split(string(b), "\n"), err
+	}
 }
